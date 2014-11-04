@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/pedro_000/Documents/NetBeansProjects/GerenciadordeHorario/src/banco/BdProfessor.java</file>
-            <file>file:/C:/Users/pedro_000/Documents/NetBeansProjects/GerenciadordeHorario/src/objeto/Professor.java</file>
-            <file>file:/C:/Users/pedro_000/Documents/NetBeansProjects/GerenciadordeHorario/src/banco/Conexao.java</file>
-            <file>file:/C:/Users/pedro_000/Documents/NetBeansProjects/GerenciadordeHorario/src/apresentacao/FormCadastroProfessor.java</file>
+            <file>file:/C:/Users/pedro_000/Documents/NetBeansProjects/JavaApp/src/apresentacao/FormCadastroProfessor.java</file>
+            <file>file:/C:/Users/pedro_000/Documents/NetBeansProjects/JavaApp/src/apresentacao/FormCadastroMateria.java</file>
+            <file>file:/C:/Users/pedro_000/Documents/NetBeansProjects/JavaApp/src/negocio/NegocioMateria.java</file>
         </group>
     </open-files>
 </project-private>

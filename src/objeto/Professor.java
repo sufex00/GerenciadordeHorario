@@ -13,15 +13,13 @@ public class Professor {
     
     private String nome;
     private String email;
-    private int cpf;
-    private int cargaHoraria;
+    private String cpf;
     private int idMateria;
 
-    public Professor(String nome, String email, int cpf, int cargaHoraria, int idMateria) {
+    public Professor(String nome, String email, String cpf, int idMateria) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
-        this.cargaHoraria = cargaHoraria;
         this.idMateria = idMateria;
     }
 
@@ -41,29 +39,20 @@ public class Professor {
         this.email = email;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
-    public int getCargaHoraria() {
-        return cargaHoraria;
-    }
-
-    public void setCargaHoraria(int cargaHoraria) {
-        this.cargaHoraria = cargaHoraria;
-    }
-
-    public int getIdMateria() {
+     public int getIdMateria() {
         return idMateria;
     }
 
     public void setIdMateria(int idMateria) {
         this.idMateria = idMateria;
     }
-    
     
 }

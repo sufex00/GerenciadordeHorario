@@ -5,7 +5,8 @@
  */
 package apresentacao;
 
-import banco.BdProfessor;
+import banco.DAO.BdProfessorDAO;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import javafx.scene.control.SelectionMode;
 import javax.swing.DefaultListModel;
@@ -21,15 +22,16 @@ import objeto.Professor;
  *
  * @author matheus
  */
-public class FormCadastroProfessor extends javax.swing.JFrame {
+public class FormCadastroProfessor extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form LProfessores
      */
-    public FormCadastroProfessor() {
+    public FormCadastroProfessor() throws PropertyVetoException{
         initComponents();
         limparCampos();
         preencherTabela();
+        this.setVisible(true);
         
         this.jComboBoxMaterias.removeAllItems();
         this.jComboBoxMaterias.addItem(new String("Escolha a matéria"));
@@ -189,7 +191,7 @@ public class FormCadastroProfessor extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jComboBoxMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -266,11 +268,10 @@ public class FormCadastroProfessor extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,8 +288,8 @@ public class FormCadastroProfessor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -310,15 +311,9 @@ public class FormCadastroProfessor extends javax.swing.JFrame {
         // TODO add your handling code here:
         Professor objProfessorSelecionado = null;
         String cpf = jTextFieldBuscaCPF.getText();
-        BdProfessor objBdProfessor= new BdProfessor();
-        ArrayList<Professor> listProfessor = objBdProfessor.SelecionarListProfessor();
-        for(Professor objProfessor : listProfessor)
-        {
-            if(objProfessor.getCpf().equals(cpf))
-            {
-                objProfessorSelecionado=objProfessor;
-            }
-        }
+        BdProfessorDAO objBdProfessor= new BdProfessorDAO();
+        ArrayList<Professor> listProfessor = objBdProfessor.listar();
+        objProfessorSelecionado=objBdProfessor.procurar(cpf);
         if(objProfessorSelecionado!=null)
         {
             jTextNome.setText(objProfessorSelecionado.getNome());
@@ -395,8 +390,8 @@ public class FormCadastroProfessor extends javax.swing.JFrame {
 
     public void preencherTabela()
     {
-        BdProfessor obj_BdProfessor = new BdProfessor();
-        ArrayList<Professor> list_Professor= obj_BdProfessor.SelecionarListProfessor();
+        BdProfessorDAO obj_BdProfessor = new BdProfessorDAO();
+        ArrayList<Professor> list_Professor= obj_BdProfessor.listar();
         
         DefaultTableModel Model = new DefaultTableModel(){  
         @Override  
@@ -421,38 +416,7 @@ public class FormCadastroProfessor extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormCadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormCadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormCadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormCadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormCadastroProfessor().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscarCpf;

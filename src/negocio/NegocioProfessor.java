@@ -2,11 +2,11 @@
 package negocio;
 
 import apresentacao.FormCadastroProfessor;
-import banco.DAO.BdProfessorDAO;
+import banco.BdProfessor;
 import objeto.Professor;
 
 public class NegocioProfessor {
-    BdProfessorDAO objBdProfessor = new BdProfessorDAO();
+    BdProfessor objBdProfessor = new BdProfessor();
     public boolean VerificadorProfessor(FormCadastroProfessor objForm ,Professor objProfessor){
         
         String MensagemErro;
@@ -26,7 +26,7 @@ public class NegocioProfessor {
             objForm.jLabelCpfErro.setVisible(true);
         }
         if(retorno)
-            retorno = objBdProfessor.salvar(objProfessor);
+            retorno = objBdProfessor.InserirProfessor(objProfessor);
         return retorno;
     }
     static public boolean VerificadorCPF (String strCpf )
@@ -81,11 +81,11 @@ public class NegocioProfessor {
    }
     public boolean excluir(FormCadastroProfessor form_professor)
     {
-        BdProfessorDAO obj_Bdprofessor = new BdProfessorDAO();
+        BdProfessor obj_Bdprofessor = new BdProfessor();
         boolean retorno=false;
         if(form_professor.jTextCpf.getText().isEmpty() || !form_professor.jTextCpf.isEditable())
         {
-            retorno = obj_Bdprofessor.deletar(form_professor.jTextCpf.getText());            
+            retorno = obj_Bdprofessor.Excluir(form_professor.jTextCpf.getText());            
         }
         return retorno;
     }

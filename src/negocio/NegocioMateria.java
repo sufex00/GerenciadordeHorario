@@ -6,10 +6,7 @@
 package negocio;
 
 import apresentacao.FormCadastroMateria;
-import banco.DAO.BdMateriaDAO;
-import banco.DAO.InterfaceDAO;
-import banco.FactoryMetody.FactoryBdMateria;
-import banco.FactoryMetody.FactoryMetody;
+import banco.BdMateria;
 import objeto.Materia;
 
 /**
@@ -20,8 +17,7 @@ public class NegocioMateria {
     
     public boolean VerificadorMateria(FormCadastroMateria form, Materia obj_Materia)
     {
-        FactoryMetody BdMateria = new FactoryBdMateria();
-        InterfaceDAO obj_BdMateria = BdMateria.criar_DAO_BD();
+        BdMateria obj_BdMateria = new BdMateria();
         boolean retorno = true;
         if(form.jTextNome.getText().isEmpty())
         {
@@ -30,7 +26,7 @@ public class NegocioMateria {
         }
         if(retorno)
         {
-            retorno = obj_BdMateria.salvar(obj_Materia);
+            retorno = obj_BdMateria.InserirMateria(obj_Materia);
         }
         return retorno;
     }

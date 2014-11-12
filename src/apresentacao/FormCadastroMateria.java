@@ -5,11 +5,7 @@
  */
 package apresentacao;
 
-import banco.DAO.BdMateriaDAO;
-import banco.DAO.InterfaceDAO;
-import banco.FactoryMetody.FactoryBdMateria;
-import banco.FactoryMetody.FactoryMetody;
-import java.beans.PropertyVetoException;
+import banco.BdMateria;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,16 +15,15 @@ import negocio.*;
  *
  * @author matheus
  */
-public class FormCadastroMateria extends javax.swing.JInternalFrame {
+public class FormCadastroMateria extends javax.swing.JFrame {
 
     /**
      * Creates new form LMaterias
      */
-    public FormCadastroMateria() throws PropertyVetoException {
+    public FormCadastroMateria() {
         initComponents();
         limparErro();
         preencherTabela();
-        this.setVisible(true);
     }
     
     public void limparErro()
@@ -305,9 +300,8 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Materia objMateriaSelecionado = null;
         String id = jTextFieldBuscaId.getText();
-        FactoryMetody BdMateria = new FactoryBdMateria();
-        InterfaceDAO objBdMateria = BdMateria.criar_DAO_BD();
-        ArrayList<Materia> listMateria = objBdMateria.listar();
+        BdMateria objBdMateria= new BdMateria();
+        ArrayList<Materia> listMateria = objBdMateria.SelecionarListMateria();
         for(Materia objMateria : listMateria)
         {
             if(objMateria.getId()==Integer.parseInt(id))
@@ -334,8 +328,8 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
 
         public void preencherTabela()
     {
-        BdMateriaDAO obj_BdMateria = new BdMateriaDAO();
-        ArrayList<Materia> list_Materia= obj_BdMateria.listar();
+        BdMateria obj_BdMateria = new BdMateria();
+        ArrayList<Materia> list_Materia= obj_BdMateria.SelecionarListMateria();
         
         DefaultTableModel Model = new DefaultTableModel(){  
         @Override  
@@ -361,7 +355,38 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
     /**
      * @param args the command line arguments
      */
- 
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FormCadastroMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FormCadastroMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FormCadastroMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FormCadastroMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FormCadastroMateria().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;

@@ -55,10 +55,7 @@ public class Materia {
         this.cargahoraria = cargahoraria;
     }
 
-    @Override
-    public String toString() {
-        return "Materia{" + "id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", cargahoraria=" + cargahoraria + '}';
-    }
+    
     
     
     

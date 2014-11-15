@@ -65,12 +65,37 @@ public class BdMateriaDAO implements InterfaceDAO<Materia>{
     }
 
     @Override
-    public boolean deletar(String cpf) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean deletar(Materia obj_materia) {
+         Conexao conexao = new Conexao();
+        String sql="DELETE FROM materia WHERE id=?";
+        try{
+            PreparedStatement pc=conexao.getConnection().prepareStatement(sql);
+            pc.setInt(1, obj_materia.getId());
+            pc.execute();
+            conexao.getConnection().close();
+            return true;
+        }catch(SQLException ex) {
+           ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public Materia procurar(String cpf) {
+    public Materia procurar(Materia id) {
+        ArrayList<Materia> list = this.listar();
+        Materia obj_retorno = null;
+        for(Materia obj_materia : list)
+        {
+            if(obj_materia.getId()==id.getId())
+            {
+                obj_retorno = obj_materia;
+            }
+        }
+        return obj_retorno;
+    }
+
+    @Override
+    public void trocar(Materia objeto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

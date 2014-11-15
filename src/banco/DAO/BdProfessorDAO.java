@@ -61,13 +61,13 @@ public class BdProfessorDAO implements InterfaceDAO<Professor>{
             return null;
         }
     }
-    public boolean deletar(String Cpf)
+    public boolean deletar(Professor obj_professor)
     {
         Conexao conexao = new Conexao();
         String sql="DELETE FROM professor WHERE cpf=?";
         try{
             PreparedStatement pc=conexao.getConnection().prepareStatement(sql);
-            pc.setString(1, Cpf);
+            pc.setString(1, obj_professor.getCpf());
             pc.execute();
             conexao.getConnection().close();
             return true;
@@ -76,19 +76,34 @@ public class BdProfessorDAO implements InterfaceDAO<Professor>{
             return false;
         }
     }
-
-    
     @Override
-    public Professor procurar(String cpf) {
+    public Professor procurar(Professor cpf) {
         ArrayList<Professor> list = this.listar();
         Professor obj_retorno = null;
         for(Professor obj_professor : list)
         {
-            if(obj_professor.getCpf().equals(cpf))
+            if(obj_professor.getCpf().equals(cpf.getCpf()))
             {
                 obj_retorno = obj_professor;
             }
         }
         return obj_retorno;
     }
+    public void trocar(Professor obj_professor)
+    {
+        Conexao conexao = new Conexao();
+        String sql="UPDATE professor set nome = ?, email=?, idmateria=? WHERE cpf=?;";
+        try{
+            PreparedStatement pc=conexao.getConnection().prepareStatement(sql);
+            pc.setString(1, obj_professor.getNome());
+            pc.setString(2, obj_professor.getEmail());     
+            pc.setInt(3, obj_professor.getIdMateria());
+            pc.setString(4, obj_professor.getCpf());
+            pc.execute();
+            conexao.getConnection().close();
+        }catch(SQLException ex) {
+           ex.printStackTrace();
+        }
+    }
+
 }

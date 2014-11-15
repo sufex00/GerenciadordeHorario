@@ -14,7 +14,8 @@ import java.util.ArrayList;
 public interface InterfaceDAO<T> {
     
     public boolean salvar(T objeto);
-    public boolean deletar(String cpf);
+    public boolean deletar(T id);
     public ArrayList<T> listar();
-    public T procurar(String cpf);
+    public T procurar(T id);
+    public void trocar(T objeto);
 }

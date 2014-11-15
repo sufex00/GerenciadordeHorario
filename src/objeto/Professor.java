@@ -22,6 +22,11 @@ public class Professor {
         this.cpf = cpf;
         this.idMateria = idMateria;
     }
+    public Professor (String cpf)
+    {
+        this.cpf=cpf;
+    }
+    
 
     public String getNome() {
         return nome;

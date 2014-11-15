@@ -5,7 +5,11 @@
  */
 package apresentacao;
 
-import banco.BdMateria;
+import banco.DAO.BdMateriaDAO;
+import banco.DAO.InterfaceDAO;
+import banco.FactoryMetody.FactoryBdMateria;
+import banco.FactoryMetody.FactoryMetody;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -15,15 +19,16 @@ import negocio.*;
  *
  * @author matheus
  */
-public class FormCadastroMateria extends javax.swing.JFrame {
+public class FormCadastroMateria extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form LMaterias
      */
-    public FormCadastroMateria() {
+    public FormCadastroMateria() throws PropertyVetoException {
         initComponents();
         limparErro();
         preencherTabela();
+        this.setVisible(true);
     }
     
     public void limparErro()
@@ -300,8 +305,9 @@ public class FormCadastroMateria extends javax.swing.JFrame {
         // TODO add your handling code here:
         Materia objMateriaSelecionado = null;
         String id = jTextFieldBuscaId.getText();
-        BdMateria objBdMateria= new BdMateria();
-        ArrayList<Materia> listMateria = objBdMateria.SelecionarListMateria();
+        FactoryMetody BdMateria = new FactoryBdMateria();
+        InterfaceDAO objBdMateria = BdMateria.criar_DAO_BD();
+        ArrayList<Materia> listMateria = objBdMateria.listar();
         for(Materia objMateria : listMateria)
         {
             if(objMateria.getId()==Integer.parseInt(id))
@@ -315,6 +321,7 @@ public class FormCadastroMateria extends javax.swing.JFrame {
             jTextId.setText(new Integer(objMateriaSelecionado.getId()).toString());
             jTextId.setEditable(false);
             jTextAreaDescricao.setText(objMateriaSelecionado.getDescricao());
+            jTextHorasAula.setText(new Integer(objMateriaSelecionado.getCargahoraria()).toString());
         }
         else
         {
@@ -328,8 +335,8 @@ public class FormCadastroMateria extends javax.swing.JFrame {
 
         public void preencherTabela()
     {
-        BdMateria obj_BdMateria = new BdMateria();
-        ArrayList<Materia> list_Materia= obj_BdMateria.SelecionarListMateria();
+        BdMateriaDAO obj_BdMateria = new BdMateriaDAO();
+        ArrayList<Materia> list_Materia= obj_BdMateria.listar();
         
         DefaultTableModel Model = new DefaultTableModel(){  
         @Override  
@@ -355,38 +362,7 @@ public class FormCadastroMateria extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormCadastroMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormCadastroMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormCadastroMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormCadastroMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormCadastroMateria().setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;

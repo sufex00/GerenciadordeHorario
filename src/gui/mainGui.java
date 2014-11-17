@@ -5,12 +5,17 @@
  */
 package gui;
 
+import Ative.Ativador;
 import apresentacao.FormCadastroMateria;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import apresentacao.FormCadastroProfessor;
 import apresentacao.FormSelectHorario;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  *
@@ -24,6 +29,33 @@ public class mainGui extends javax.swing.JFrame {
     public mainGui() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
+        BufferedReader read;
+        String code = "";
+        try {
+            read = new BufferedReader(new FileReader("ative.txt"));
+            while(read.ready()){
+                code = read.readLine();
+            }
+            read.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(code.equals("")){
+            Ativador noAtived;
+            noAtived = new Ativador();
+            offButton();
+            noAtived.setVisible(true);
+            JDesktopMDI.add(noAtived);
+            try {
+                noAtived.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        
     }
 
     /**
@@ -86,7 +118,7 @@ public class mainGui extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(223, 223, 223)
                 .addComponent(jLabel2)
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addContainerGap(490, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +172,7 @@ public class mainGui extends javax.swing.JFrame {
                         .addComponent(jButtonHorario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonUltimosHorarios)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
                         .addComponent(jLabel1))
                     .addComponent(JDesktopMDI))
                 .addContainerGap())
@@ -157,6 +189,13 @@ public class mainGui extends javax.swing.JFrame {
         jButtonNovaMateria.setEnabled(true);
         jButtonSelectHoras.setEnabled(true);
 
+    }
+    private void offButton(){
+        jButtonNovoProfessor.setEnabled(false);
+        jButtonHorario.setEnabled(false);
+        jButtonUltimosHorarios.setEnabled(false);
+        jButtonNovaMateria.setEnabled(false);
+        jButtonSelectHoras.setEnabled(false);
     }
     private void jButtonNovoProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoProfessorActionPerformed
         // TODO add your handling code here:

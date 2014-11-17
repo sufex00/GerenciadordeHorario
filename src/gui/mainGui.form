@@ -61,7 +61,7 @@
                       <Component id="jButtonHorario" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButtonUltimosHorarios" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="169" max="32767" attributes="0"/>
+                      <EmptySpace pref="275" max="32767" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="JDesktopMDI" alignment="0" max="32767" attributes="0"/>
@@ -117,7 +117,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="223" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="201" max="32767" attributes="0"/>
+                  <EmptySpace pref="490" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

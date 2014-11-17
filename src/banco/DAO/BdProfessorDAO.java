@@ -76,6 +76,7 @@ public class BdProfessorDAO implements InterfaceDAO<Professor>{
             return false;
         }
     }
+    
     @Override
     public Professor procurar(Professor cpf) {
         ArrayList<Professor> list = this.listar();

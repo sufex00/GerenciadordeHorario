@@ -11,25 +11,15 @@ package objeto;
  */
 public class DiaEscolar {
      
-    public enum PeriodoEscolar {
-        MANHA(1), TARDE(2), NOITE(3);
-        private int valor;
 
-        private PeriodoEscolar(int valor) {
-                this.valor = valor;
-        }
-    };  
-
-    private PeriodoEscolar horario_escolar;
     private int dia_escolar;
     private Turma classe;
     private int[] materia;
     private int numMateria;
     
-    public DiaEscolar(int numMateria, PeriodoEscolar horario_escolar, int dia_escolar)
+    public DiaEscolar(int numMateria, int dia_escolar)
     {
         this.numMateria=numMateria;
-        this.horario_escolar=horario_escolar;
         this.dia_escolar=dia_escolar;
         materia = new int [numMateria];
     }
@@ -45,14 +35,6 @@ public class DiaEscolar {
     
     public int getNumMateria() {
         return numMateria;
-    }
-
-    public PeriodoEscolar getHorario_escolar() {
-        return horario_escolar;
-    }
-
-    public void setHorario_escolar(PeriodoEscolar horario_escolar) {
-        this.horario_escolar = horario_escolar;
     }
 
     public int getDia_escolar() {
@@ -85,6 +67,11 @@ public class DiaEscolar {
 
     public int[] getMateria() {
         return materia;
+    }
+    
+    public int getMateria(int indice)
+    {
+        return materia[indice];
     }
     
 }

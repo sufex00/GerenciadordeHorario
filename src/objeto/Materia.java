@@ -11,16 +11,30 @@ package objeto;
  */
 public class Materia {
     
-    int id;
-    String nome;
-    String descricao;
-    int cargahoraria;
+    private int id;
+    private String nome;
+    private String descricao;
+    private int cargahoraria;
+    private int idTurma;
 
     public Materia(int id, String nome, String descricao, int cargahoraria) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.cargahoraria = cargahoraria;
+    }
+    
+    public Materia (int id)
+    {
+        this.id=id;
+    }
+
+    public int getIdTurma() {
+        return idTurma;
+    }
+
+    public void setIdTurma(int idTurma) {
+        this.idTurma = idTurma;
     }
 
     public int getId() {

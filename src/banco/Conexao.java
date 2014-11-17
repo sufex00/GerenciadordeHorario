@@ -9,8 +9,9 @@ import javax.swing.JOptionPane;
 
 public class Conexao {
 
+    Connection conexao;
     public Connection getConnection() {
-        Connection conexao;
+        
         try {
             String stringConexao = "jdbc:postgresql://localhost:5432/";
             String nomeBanco = "gerenciador";
@@ -29,7 +30,11 @@ public class Conexao {
             JOptionPane.showMessageDialog(null, e.getMessage());
             conexao = null;
         }
-        
         return conexao;
     }
+    public void close() throws SQLException
+    {
+        conexao.close();
+    }
+
 }

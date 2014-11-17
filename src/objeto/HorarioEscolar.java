@@ -12,10 +12,13 @@ package objeto;
 public class HorarioEscolar {
     
     private DiaEscolar[] dia_Escolar;
+    private int idTurma;
+    private int num;
     
     public HorarioEscolar(int num)
     {
         this.dia_Escolar = new DiaEscolar [num];
+        this.num=num;
     }
     
     public void setDiaEscolar(int indice, DiaEscolar dia_Escolar)
@@ -27,4 +30,18 @@ public class HorarioEscolar {
     {
         return this.dia_Escolar;
     }
+    
+    public DiaEscolar getDiaEscolar(int indice)
+    {
+        return this.dia_Escolar[indice];
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+   
 }

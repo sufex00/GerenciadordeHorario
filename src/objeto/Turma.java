@@ -12,10 +12,23 @@ package objeto;
 public class Turma {
     private String nome;
     private int id;
+        public enum PeriodoEscolar {
+        MANHA(1), TARDE(2), NOITE(3);
+        private int valor;
 
-    public Turma(String nome, int id) {
+        private PeriodoEscolar(int valor) {
+                this.valor = valor;
+        }
+    };  
+
+    private PeriodoEscolar horario_escolar;
+    private String descricao;
+
+    public Turma(String nome, int id, PeriodoEscolar horario, String Descricao) {
         this.nome = nome;
         this.id = id;
+        this.horario_escolar=horario;
+        this.descricao=Descricao;
     }
 
     public String getNome() {
@@ -33,5 +46,22 @@ public class Turma {
     public void setId(int id) {
         this.id = id;
     }
+
+    public PeriodoEscolar getHorario_escolar() {
+        return horario_escolar;
+    }
+
+    public void setHorario_escolar(PeriodoEscolar horario_escolar) {
+        this.horario_escolar = horario_escolar;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    
     
 }

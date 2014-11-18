@@ -9,12 +9,15 @@ import banco.DAO.BdProfessorDAO;
 import banco.DAO.InterfaceDAO;
 import banco.FactoryMetody.FactoryBdMateria;
 import banco.FactoryMetody.FactoryBdProfessor;
+import banco.FactoryMetody.FactoryBdTurma;
 import banco.FactoryMetody.FactoryMetody;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 import objeto.Materia;
 import objeto.Professor;
+import objeto.Turma;
 
 /**
  *
@@ -27,6 +30,7 @@ public class FormSelectHorario extends javax.swing.JInternalFrame {
     public FormSelectHorario() {
         initComponents();
         preencherForm(null);
+        preencherTabela();
     }
 
     /**
@@ -378,6 +382,39 @@ public class FormSelectHorario extends javax.swing.JInternalFrame {
             this.jTextFieldDescricao.setText("");
             this.jTextFieldTurma.setText("");
         }
+    }
+    
+        public void preencherTabela()
+    {
+        FactoryMetody FactoryBd = new FactoryBdProfessor();
+        InterfaceDAO obj_BdProfessor = FactoryBd.criar_DAO_BD();
+        ArrayList<Professor> list_Professor= obj_BdProfessor.listar();
+        
+        DefaultTableModel Model = new DefaultTableModel(){  
+        @Override  
+            public boolean isCellEditable(int row, int column) {  //sobscrevendo o metodo isCell para deixar as celulas não editáveis  
+                return false;  
+            }  
+    };  
+        
+        String [] colunas = new String[] { 
+                    "CPF", "Nome", "Email", "Turma", "Materia" };
+        Model.setColumnIdentifiers(colunas);
+        FactoryBd= new FactoryBdMateria();
+        obj_BdProfessor = FactoryBd.criar_DAO_BD();
+        for(Professor obj_Professor : list_Professor)
+        {
+            Materia objMateria =(Materia) obj_BdProfessor.procurar(new Materia(obj_Professor.getIdMateria()));
+            FactoryBd = new FactoryBdTurma();
+            obj_BdProfessor = FactoryBd.criar_DAO_BD();
+            Turma objTurma = (Turma) obj_BdProfessor.procurar(new Turma(objMateria.getIdTurma()));
+            System.out.print(objMateria.getNome().length());
+                Model.addRow(new Object[] {obj_Professor.getCpf(), 
+                    obj_Professor.getNome(), obj_Professor.getEmail(), objTurma.getNome(), objMateria.getNome()}
+                    );
+        }
+        jTableProfessores.setModel(Model);
+                
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

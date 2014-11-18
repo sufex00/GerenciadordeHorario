@@ -5,9 +5,6 @@
  */
 package gui;
 
-import Ative.Ativador;
-import Ative.DB.CodigoDB;
-import Ative.Proxy.Proxy;
 import apresentacao.FormCadastroMateria;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
@@ -15,7 +12,6 @@ import java.util.logging.Logger;
 import apresentacao.FormCadastroProfessor;
 import apresentacao.FormSelectHorario;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -29,39 +25,15 @@ public class mainGui extends javax.swing.JFrame {
     /**
      * Creates new form mainGui
      */
-    public mainGui() throws IOException, PropertyVetoException {
+    public mainGui() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
-        BufferedReader read;
-        String code = "";
-        File file = new File("ative.txt");
-        if (file.exists()) {
-            try {
-                read = new BufferedReader(new FileReader("ative.txt"));
-                while (read.ready()) {
-                    code = read.readLine();
-                }
-                read.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            file.createNewFile();
+              
+            
+            
         }
-        if (code.equals("MATH3-P3DR0-4NDR3-1C0N3") || code.equals("MATH3P3DR04NDR31C0N3")) {
-
-        } else if (!isCode(code)) {
-            Ativador noAtived;
-            noAtived = new Ativador();
-            offButton();
-            noAtived.setVisible(true);
-            JDesktopMDI.add(noAtived);
-            noAtived.setMaximum(true);
-        }
-
-    }
+        
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,7 +53,6 @@ public class mainGui extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         JDesktopMDI = new javax.swing.JDesktopPane();
         jButtonSelectHoras = new javax.swing.JButton();
-        jButtonRefresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,13 +112,6 @@ public class mainGui extends javax.swing.JFrame {
             }
         });
 
-        jButtonRefresh.setText("Verifique Ativação");
-        jButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRefreshActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,8 +127,7 @@ public class mainGui extends javax.swing.JFrame {
                             .addComponent(jButtonNovaMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonHorario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonUltimosHorarios, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(jButtonSelectHoras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButtonSelectHoras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(32, 32, 32)
                         .addComponent(JDesktopMDI)))
                 .addContainerGap())
@@ -186,9 +149,7 @@ public class mainGui extends javax.swing.JFrame {
                         .addComponent(jButtonHorario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonUltimosHorarios)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
-                        .addComponent(jButtonRefresh)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
                         .addComponent(jLabel1))
                     .addComponent(JDesktopMDI))
                 .addContainerGap())
@@ -206,47 +167,26 @@ public class mainGui extends javax.swing.JFrame {
         jButtonSelectHoras.setEnabled(true);
 
     }
-
-    private void offButton() {
+    private void offButton(){
         jButtonNovoProfessor.setEnabled(false);
         jButtonHorario.setEnabled(false);
         jButtonUltimosHorarios.setEnabled(false);
         jButtonNovaMateria.setEnabled(false);
         jButtonSelectHoras.setEnabled(false);
     }
-
-    private boolean isCode(String str) {
-        Proxy proxy = new Proxy();
-        CodigoDB code = new CodigoDB();
-        //System.out.println("Proxy: "+proxy.proxyTest(str) +"\nValidar: "+ code.exist(str));
-        return proxy.proxyTest(str) && code.exist(proxy.getCode());
-    }
-
-    private void noFrame() {
-        guiNull vazio = null;
-        theButton();
-        vazio = new guiNull();
-        vazio.setVisible(true);
-        JDesktopMDI.add(vazio);
-        try {
-            vazio.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     private void jButtonNovoProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoProfessorActionPerformed
         // TODO add your handling code here:
         theButton();
         FormCadastroProfessor newProf = null;
         theButton();
-        try {
+        try{
             newProf = new FormCadastroProfessor();
         } catch (PropertyVetoException ex) {
             Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
         }
         newProf.setVisible(true);
         JDesktopMDI.add(newProf);
-        try {
+        try{
             newProf.setMaximum(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
@@ -269,9 +209,9 @@ public class mainGui extends javax.swing.JFrame {
 
     private void jButtonNovaMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovaMateriaActionPerformed
         // TODO add your handling code here:
-        FormCadastroMateria newMateria = null;
+        FormCadastroMateria newMateria = null ;
         theButton();
-        try {
+        try{
             newMateria = new FormCadastroMateria();
         } catch (PropertyVetoException ex) {
             Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
@@ -279,7 +219,7 @@ public class mainGui extends javax.swing.JFrame {
         newMateria.setVisible(true);
         jButtonNovaMateria.setEnabled(false);
         JDesktopMDI.add(newMateria);
-        try {
+        try{
             newMateria.setMaximum(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
@@ -294,36 +234,12 @@ public class mainGui extends javax.swing.JFrame {
         horas.setVisible(true);
         jButtonSelectHoras.setEnabled(false);
         JDesktopMDI.add(horas);
-        try {
+        try{
             horas.setMaximum(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonSelectHorasActionPerformed
-
-    private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
-        // TODO add your handling code here:
-        BufferedReader read;
-        String code = "";
-        File file = new File("ative.txt");
-        if (file.exists()) {
-            try {
-                read = new BufferedReader(new FileReader("ative.txt"));
-                while (read.ready()) {
-                    code = read.readLine();
-                }
-                read.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if (isCode(code)) {
-            noFrame();
-            theButton();
-        }
-    }//GEN-LAST:event_jButtonRefreshActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,13 +271,7 @@ public class mainGui extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new mainGui().setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (PropertyVetoException ex) {
-                    Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new mainGui().setVisible(true);
             }
         });
     }
@@ -371,7 +281,6 @@ public class mainGui extends javax.swing.JFrame {
     private javax.swing.JButton jButtonHorario;
     private javax.swing.JButton jButtonNovaMateria;
     private javax.swing.JButton jButtonNovoProfessor;
-    private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonSelectHoras;
     private javax.swing.JButton jButtonUltimosHorarios;
     private javax.swing.JLabel jLabel1;

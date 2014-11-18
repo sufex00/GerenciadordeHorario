@@ -30,6 +30,10 @@ public class Turma {
         this.horario_escolar=horario;
         this.descricao=Descricao;
     }
+    public Turma (int id)
+    {
+        this.id=id;
+    }
 
     public String getNome() {
         return nome;
@@ -61,6 +65,11 @@ public class Turma {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return  nome ;
     }
     
     

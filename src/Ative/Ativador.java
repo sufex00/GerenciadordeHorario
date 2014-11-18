@@ -5,6 +5,16 @@
  */
 package Ative;
 
+import Ative.DB.CodigoDB;
+import Ative.Proxy.Proxy;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static javafx.application.Platform.exit;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author matheus
@@ -33,6 +43,7 @@ public class Ativador extends javax.swing.JInternalFrame {
         jButtonLimparCampo = new javax.swing.JButton();
         Cancelar = new javax.swing.JButton();
         jTextCode = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         jLabel1.setText("Insira código de ativação");
 
@@ -57,6 +68,8 @@ public class Ativador extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -77,11 +90,17 @@ public class Ativador extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(30, 30, 30))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(134, 134, 134)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addGap(42, 42, 42)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jTextCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -90,7 +109,7 @@ public class Ativador extends javax.swing.JInternalFrame {
                     .addComponent(jButtonConfirm)
                     .addComponent(jButtonLimparCampo)
                     .addComponent(Cancelar))
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,7 +124,7 @@ public class Ativador extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(97, 97, 97)
+                .addGap(80, 80, 80)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(117, 117, 117))
         );
@@ -115,10 +134,42 @@ public class Ativador extends javax.swing.JInternalFrame {
 
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
         // TODO add your handling code here:
+        //JOptionPane.showMessageDialog(null, "chegou aqui!!");
         Proxy proxy = new Proxy();
-       if(proxy.proxyTest(jTextCode.getText())){
-           
-       }
+        FileWriter fileName = null;
+        try {
+            fileName = new FileWriter("ative.txt");
+        } catch (IOException ex) {
+            Logger.getLogger(Ativador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        BufferedWriter write = new BufferedWriter(fileName);
+        CodigoDB verificar = new CodigoDB();
+        if (proxy.getCode().equals("MATH3P3DR04NDR31C0N3")) {
+            JOptionPane.showMessageDialog(null, "Codigo aceito");
+            try {
+                write.write(proxy.getCode());
+                JOptionPane.showMessageDialog(null, "Ativação concluida com sucesso, verifique ativação para liberar uso.");
+            } catch (IOException ex) {
+                Logger.getLogger(Ativador.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Falha na ativação.");
+            }
+        } else if (proxy.proxyTest(jTextCode.getText()) && verificar.exist(proxy.getCode())) {
+            JOptionPane.showMessageDialog(null, "Codigo aceito");
+            try {
+                write.write(proxy.getCode());
+                JOptionPane.showMessageDialog(null, "Ativação concluida com sucesso, verifique ativação para liberar uso.");
+            } catch (IOException ex) {
+                Logger.getLogger(Ativador.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Falha na ativação.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Codigo não foi aceito.");
+        }
+        try {
+            write.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Ativador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
     private void jButtonLimparCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimparCampoActionPerformed
@@ -128,6 +179,7 @@ public class Ativador extends javax.swing.JInternalFrame {
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         // TODO add your handling code here:
+        exit();
     }//GEN-LAST:event_CancelarActionPerformed
 
 
@@ -136,7 +188,9 @@ public class Ativador extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonConfirm;
     private javax.swing.JButton jButtonLimparCampo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextCode;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -68,7 +68,7 @@ public class BdTurmaDAO implements InterfaceDAO<Turma>{
                 String nome = objResultSet.getString("nome");
                 String descricao = objResultSet.getString("descricao");
                 String horario = objResultSet.getString("horario");
-                Turma objeto= new Turma (nome, id, Turma.PeriodoEscolar.valueOf(nome), descricao);
+                Turma objeto= new Turma (nome, id, Turma.PeriodoEscolar.valueOf(horario), descricao);
                 listMateria.add(objeto);
             }
             conexao.getConnection().close();
@@ -83,11 +83,11 @@ public class BdTurmaDAO implements InterfaceDAO<Turma>{
     public Turma procurar(Turma objeto) {
         ArrayList<Turma> list = this.listar();
         Turma obj_retorno = null;
-        for(Turma obj_materia : list)
+        for(Turma objTurma : list)
         {
-            if(obj_materia.getId()==objeto.getId())
+            if(objTurma.getId()==objeto.getId())
             {
-                obj_retorno = objeto;
+                obj_retorno = objTurma;
             }
         }
         return obj_retorno;

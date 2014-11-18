@@ -1,9 +1,11 @@
+package Ative.Proxy;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Ative;
+
 
 /**
  *
@@ -17,7 +19,7 @@ public class Proxy {
 
     public boolean proxyTest(String code) {
         this.code = code.toUpperCase();
-        System.out.println(this.code);
+        //System.out.println(this.code);
         if (this.code.length() < 20 || this.code.length() > 23) {
             //System.out.println("Codigo Não pode ser processado TAMANHO");
             return false;
@@ -60,7 +62,7 @@ public class Proxy {
         //System.out.println(str);
         for (int i = 0; i < str.length(); ++i) {
             aux += str.charAt(i);
-            System.out.println(aux);
+            //System.out.println(aux);
             if (!modolo.contains(aux)) {
                 return false;
             }

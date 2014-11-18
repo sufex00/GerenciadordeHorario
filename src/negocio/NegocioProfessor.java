@@ -3,10 +3,12 @@ package negocio;
 
 import apresentacao.FormCadastroProfessor;
 import banco.DAO.BdProfessorDAO;
+import banco.Memento.ListaProfessorMemento;
 import objeto.Professor;
 
 public class NegocioProfessor {
     BdProfessorDAO objBdProfessor = new BdProfessorDAO();
+
     public boolean VerificadorProfessor(FormCadastroProfessor objForm ,Professor objProfessor){
         
         String MensagemErro;
@@ -26,7 +28,9 @@ public class NegocioProfessor {
             objForm.jLabelCpfErro.setVisible(true);
         }
         if(retorno)
+        {
             retorno = objBdProfessor.salvar(objProfessor);
+        }
         return retorno;
     }
     static public boolean VerificadorCPF (String strCpf )

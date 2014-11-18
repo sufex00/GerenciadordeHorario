@@ -17,11 +17,12 @@ public class Materia {
     private int cargahoraria;
     private int idTurma;
 
-    public Materia(int id, String nome, String descricao, int cargahoraria) {
+    public Materia(int id, String nome, String descricao, int cargahoraria, int idTurma) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.cargahoraria = cargahoraria;
+        this.idTurma=idTurma;
     }
     
     public Materia (int id)
@@ -69,7 +70,11 @@ public class Materia {
         this.cargahoraria = cargahoraria;
     }
 
-    
+    @Override
+    public String toString()
+    {
+        return this.getNome();
+    }
     
     
     

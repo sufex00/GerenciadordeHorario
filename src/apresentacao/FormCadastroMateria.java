@@ -8,6 +8,7 @@ package apresentacao;
 import banco.DAO.BdMateriaDAO;
 import banco.DAO.InterfaceDAO;
 import banco.FactoryMetody.FactoryBdMateria;
+import banco.FactoryMetody.FactoryBdTurma;
 import banco.FactoryMetody.FactoryMetody;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
         preencherTabela();
         this.setVisible(true);
         this.jComboTurma.removeAllItems();
-        this.jComboTurma.addItem(new String("Escolha uma Turma"));
     }
     
     public void limparErro()
@@ -189,6 +189,11 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
         jLabel5.setText("Turma:");
 
         jComboTurma.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboTurma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboTurmaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -306,7 +311,8 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
         int horasAulas = Integer.parseInt(this.jTextHorasAula.getText());
         int id = Integer.parseInt(this.jTextId.getText());
         String descricao = this.jTextAreaDescricao.getText();
-        Materia obj_materia = new Materia(id, nome, descricao, horasAulas);
+        Turma obj =(Turma) this.jComboTurma.getSelectedItem();
+        Materia obj_materia = new Materia(id, nome, descricao, horasAulas, obj.getId());
         NegocioMateria obj_negocio = new NegocioMateria();
         if(obj_negocio.VerificadorMateria(this, obj_materia))
         {
@@ -352,9 +358,22 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldBuscaIdActionPerformed
 
+    private void jComboTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboTurmaActionPerformed
+        // TODO add your handling code here:
+        FactoryMetody FactoryBd = new FactoryBdTurma();
+        InterfaceDAO InterfaceBd = FactoryBd.criar_DAO_BD();
+        ArrayList<Turma> lista = InterfaceBd.listar();
+        for(Turma objTurma : lista)
+        {
+            this.jComboTurma.addItem(objTurma);
+        }
+        
+    }//GEN-LAST:event_jComboTurmaActionPerformed
+
         public void preencherTabela()
     {
-        BdMateriaDAO obj_BdMateria = new BdMateriaDAO();
+        FactoryMetody FactoryBd = new FactoryBdMateria();
+        InterfaceDAO obj_BdMateria = FactoryBd.criar_DAO_BD();
         ArrayList<Materia> list_Materia= obj_BdMateria.listar();
         
         DefaultTableModel Model = new DefaultTableModel(){  
@@ -365,13 +384,16 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
     };  
         
         String [] colunas = new String[] { 
-                    "Id", "Nome", "Carga Horaria", "Descrição" };
+                    "Id", "Nome", "Carga Horaria", "Descrição", "Turma" };
         Model.setColumnIdentifiers(colunas);
+        FactoryBd=new FactoryBdTurma();
+        obj_BdMateria=FactoryBd.criar_DAO_BD();
         for(Materia obj_materia : list_Materia)
         {
-            System.out.println();
+            Turma objTurma = (Turma) obj_BdMateria.procurar(new Turma(obj_materia.getIdTurma()));
+            System.out.println(objTurma.getDescricao());
                 Model.addRow(new Object[] {obj_materia.getId(), 
-                    obj_materia.getNome(), obj_materia.getCargahoraria(), obj_materia.getDescricao()}
+                    obj_materia.getNome(), obj_materia.getCargahoraria(), obj_materia.getDescricao(), objTurma.getNome()}
                     );
         }
         jTableMateria.setModel(Model);

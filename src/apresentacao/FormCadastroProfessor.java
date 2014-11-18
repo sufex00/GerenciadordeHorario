@@ -6,6 +6,11 @@
 package apresentacao;
 
 import banco.DAO.BdProfessorDAO;
+import banco.DAO.InterfaceDAO;
+import banco.FactoryMetody.FactoryBdMateria;
+import banco.FactoryMetody.FactoryBdProfessor;
+import banco.FactoryMetody.FactoryMetody;
+import banco.Memento.ListaProfessorMemento;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import javafx.scene.control.SelectionMode;
@@ -16,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import negocio.NegocioProfessor;
+import objeto.Materia;
 import objeto.Professor;
 
 /**
@@ -24,9 +30,8 @@ import objeto.Professor;
  */
 public class FormCadastroProfessor extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form LProfessores
-     */
+
+    
     public FormCadastroProfessor() throws PropertyVetoException{
         initComponents();
         limparCampos();
@@ -34,7 +39,6 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         this.setVisible(true);
         
         this.jComboBoxMaterias.removeAllItems();
-        this.jComboBoxMaterias.addItem(new String("Escolha a matéria"));
     }
     
         private void limparCampos()
@@ -109,6 +113,11 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         });
 
         jComboBoxMaterias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxMaterias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxMateriasActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Materias:");
 
@@ -232,18 +241,21 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9)
                     .addComponent(jTextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelEmailErro))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonLimpar, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButtonExcluir, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
 
@@ -298,7 +310,7 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -312,15 +324,21 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Professor objProfessorSelecionado = null;
         String cpf = jTextFieldBuscaCPF.getText();
-        BdProfessorDAO objBdProfessor= new BdProfessorDAO();
+        FactoryMetody FactoryBd = new FactoryBdProfessor();
+        InterfaceDAO  objBdProfessor= FactoryBd.criar_DAO_BD();
         ArrayList<Professor> listProfessor = objBdProfessor.listar();
-        objProfessorSelecionado=objBdProfessor.procurar(new Professor(cpf));
+        objProfessorSelecionado=(Professor) objBdProfessor.procurar(new Professor(cpf));
         if(objProfessorSelecionado!=null)
         {
             jTextNome.setText(objProfessorSelecionado.getNome());
             jTextCpf.setText(objProfessorSelecionado.getCpf());
             jTextCpf.setEditable(false);
             jTextEmail.setText(objProfessorSelecionado.getEmail());
+            FactoryBd = new FactoryBdMateria();
+            objBdProfessor=FactoryBd.criar_DAO_BD();
+            Materia p = (Materia) objBdProfessor.procurar(new Materia(objProfessorSelecionado.getIdMateria()));
+            System.out.println(p.getNome());
+            jComboBoxMaterias.setSelectedItem(p);
         }
         else
         {
@@ -339,9 +357,9 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         String nome = jTextNome.getText();
         String email = jTextEmail.getText();
         String cpf = jTextCpf.getText();
-
+        Materia obj =(Materia) this.jComboBoxMaterias.getSelectedItem();
         
-        Professor objProfessor = new Professor(nome, email, cpf, 0);
+        Professor objProfessor = new Professor(nome, email, cpf, obj.getId());
         NegocioProfessor objNegocioCliente = new NegocioProfessor();
         if(objNegocioCliente.VerificadorProfessor(this, objProfessor))
         {
@@ -365,6 +383,7 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         this.jTextNome.setText("");
         this.jTextEmail.setText("");
         this.jTextCpf.setText("");
+        this.jTextCpf.setEditable(true);
         this.jComboBoxMaterias.setSelectedIndex(0);
     }
     
@@ -389,9 +408,21 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
+    private void jComboBoxMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxMateriasActionPerformed
+        // TODO add your handling code here:
+        FactoryMetody FactoryBd = new FactoryBdMateria();
+        InterfaceDAO InterfaceBd = FactoryBd.criar_DAO_BD();
+        ArrayList<Materia> lista = InterfaceBd.listar();
+        for (Materia objMateria : lista)
+        {
+            this.jComboBoxMaterias.addItem(objMateria);
+        }
+    }//GEN-LAST:event_jComboBoxMateriasActionPerformed
+
     public void preencherTabela()
     {
-        BdProfessorDAO obj_BdProfessor = new BdProfessorDAO();
+        FactoryMetody FactoryBd = new FactoryBdProfessor();
+        InterfaceDAO obj_BdProfessor = FactoryBd.criar_DAO_BD();
         ArrayList<Professor> list_Professor= obj_BdProfessor.listar();
         
         DefaultTableModel Model = new DefaultTableModel(){  
@@ -404,11 +435,13 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         String [] colunas = new String[] { 
                     "CPF", "Nome", "Email", "Carag Horaria", "Materia" };
         Model.setColumnIdentifiers(colunas);
+        FactoryBd= new FactoryBdMateria();
+        obj_BdProfessor = FactoryBd.criar_DAO_BD();
         for(Professor obj_Professor : list_Professor)
         {
-            System.out.println();
+            Materia objMateria =(Materia) obj_BdProfessor.procurar(new Materia(obj_Professor.getIdMateria()));
                 Model.addRow(new Object[] {obj_Professor.getCpf(), 
-                    obj_Professor.getNome(), obj_Professor.getEmail(), obj_Professor.getIdMateria()}
+                    obj_Professor.getNome(), obj_Professor.getEmail(), objMateria.getCargahoraria(), objMateria.getNome()}
                     );
         }
         jTableProfessores.setModel(Model);

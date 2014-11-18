@@ -70,31 +70,17 @@ public class Algoritimo {
         HorarioEscolar geneFilho2 = new HorarioEscolar(genePai2.getNum());
 
         //realiza o corte, 
-        for(int i=0 ; i <pontoCorte1 ; i++)
+        for(int i=0 ; i <genePai1.getNum()-1 ; i++)
         {
-            geneFilho1.setDiaEscolar(i, genePai1.getDiaEscolar(i));
+            geneFilho1.setDiaEscolar(i, genePai1.getDiaEscolar(i+1));
         }
-        for(int i=pontoCorte1 ; i<pontoCorte2 ; i++)
+            geneFilho1.setDiaEscolar(genePai1.getNum()-1, genePai1.getDiaEscolar(0));
+        for(int i=0 ; i <genePai1.getNum()-1 ; i++)
         {
-            geneFilho1.setDiaEscolar(i, genePai2.getDiaEscolar(i));
+            geneFilho2.setDiaEscolar(i+1, genePai2.getDiaEscolar(i));
         }
-        for(int i=pontoCorte2 ; i<genePai1.getNum() ; i++)
-        {
-            geneFilho1.setDiaEscolar(i, genePai1.getDiaEscolar(i));
-        }
+            geneFilho2.setDiaEscolar(0, genePai2.getDiaEscolar(genePai1.getNum()-1));
         
-        for(int i=0 ; i <pontoCorte1 ; i++)
-        {
-            geneFilho2.setDiaEscolar(i, genePai2.getDiaEscolar(i));
-        }
-        for(int i=pontoCorte1 ; i<pontoCorte2 ; i++)
-        {
-            geneFilho2.setDiaEscolar(i, genePai1.getDiaEscolar(i));
-        }
-        for(int i=pontoCorte2 ; i<genePai1.getNum() ; i++)
-        {
-            geneFilho2.setDiaEscolar(i, genePai2.getDiaEscolar(i));
-        }
         //cria o novo indivíduo com os genes dos pais
         filhos[0] = new Individuo(geneFilho1);
         filhos[1] = new Individuo(geneFilho2);

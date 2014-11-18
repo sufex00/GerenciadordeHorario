@@ -21,15 +21,15 @@ public class BdMateriaDAO implements InterfaceDAO<Materia>{
         
         public boolean salvar(Materia objMateria){
         Conexao conexao = new Conexao();
-        String sql="INSERT INTO materia (id, nome, descricao, cargahoraria"
-                + ") VALUES (?, ?, ?, ?)";
+        String sql="INSERT INTO materia (id, nome, descricao, cargahoraria, idturma"
+                + ") VALUES (?, ?, ?, ?, ?)";
         try{
             PreparedStatement pc=conexao.getConnection().prepareStatement(sql);
             pc.setInt(1, objMateria.getId());
             pc.setString(2, objMateria.getNome());
             pc.setString(3, objMateria.getDescricao());
             pc.setInt(4, objMateria.getCargahoraria());
-            
+            pc.setInt(5, objMateria.getIdTurma());
             pc.execute();
             conexao.getConnection().close();
             return true;
@@ -53,7 +53,8 @@ public class BdMateriaDAO implements InterfaceDAO<Materia>{
                 String nome = objResultSet.getString("nome");
                 String descricao = objResultSet.getString("descricao");
                 int cargaHoraria = objResultSet.getInt("cargahoraria");
-                Materia obj_materia = new Materia (id, nome, descricao, cargaHoraria);
+                int idTurma = objResultSet.getInt("idturma");
+                Materia obj_materia = new Materia (id, nome, descricao, cargaHoraria, idTurma);
                 listMateria.add(obj_materia);
             }
             conexao.getConnection().close();

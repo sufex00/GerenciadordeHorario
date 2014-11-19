@@ -5,7 +5,11 @@
  */
 package apresentacao;
 
-import Main.OutPDF;
+import output.OutPDF;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -117,11 +121,22 @@ public class FormGerarPDF extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         OutPDF out = new OutPDF(7);
-        out.setFileName(jTextFieldFileName.getText());
-        out.setSchoolName(jTextFieldSchoolName.getText());
-        //out.addCell(null);
-        out.setDescricao(jTextAreaDescricao.getText());
-        
+        if (jTextFieldFileName.getText().equals("")
+                && jTextFieldSchoolName.getText().equals("")
+                && jTextAreaDescricao.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Existem campos vazio, por favor preencher todos");
+        } else {
+            out.setFileName(jTextFieldFileName.getText());
+            out.setSchoolName(jTextFieldSchoolName.getText());
+            //out.addCell();
+            out.setDescricao(jTextAreaDescricao.getText());
+            try {
+                out.CreatePDF();
+            } catch (IOException ex) {
+                Logger.getLogger(FormGerarPDF.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

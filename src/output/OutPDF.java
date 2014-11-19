@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Main;
+package output;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -33,18 +33,19 @@ public class OutPDF {
     private static String schoolName;
     private static String descricao = "";
     private PdfPTable table;
-    private PdfPCell[] cell = new PdfPCell[7];
+    private PdfPCell[] cell = new PdfPCell[6];
     private int aux = 0;
+    private int dias;
 
     public OutPDF(int numColumns) {
         this.table = new PdfPTable(numColumns);
+        this.dias = numColumns;
         PdfPCell[] cell = new PdfPCell[]{new PdfPCell(Phrase.getInstance("Horário")),
             new PdfPCell(Phrase.getInstance("Segunda")),
             new PdfPCell(Phrase.getInstance("Terça")),
             new PdfPCell(Phrase.getInstance("Quarta")),
             new PdfPCell(Phrase.getInstance("Quinta")),
-            new PdfPCell(Phrase.getInstance("Sexta")),
-            new PdfPCell(Phrase.getInstance("Sabado"))};
+            new PdfPCell(Phrase.getInstance("Sexta"))};
         PdfPRow row = new PdfPRow(cell);
         table.getRows().add(row);
     }
@@ -109,11 +110,11 @@ public class OutPDF {
     }
     
     public void addCell(String str) {
-        if (aux == 7) {
+        if (aux == dias) {
             PdfPRow row = new PdfPRow(cell);
             table.getRows().add(row);
             aux = 0;
-            cell = new PdfPCell[7];
+            cell = new PdfPCell[dias];
         }
         cell[aux] = new PdfPCell(Phrase.getInstance(str));
         aux++;
@@ -130,7 +131,7 @@ public class OutPDF {
         if (aux == 0) {
             JOptionPane.showMessageDialog(null, "Row Completa não hà necessidade de usar metodo!");
         } else {
-            while (aux != 7) {
+            while (aux != dias) {
                 addCell("--");
             }
             addCell("--");

@@ -54,7 +54,7 @@ public class BdProfessorDAO implements InterfaceDAO<Professor>{
                 Professor objProfessor = new Professor(nome, email, cpf, idMateria);
                 listProfessor.add(objProfessor);
             }
-            conexao.getConnection().close();
+            conexao.close();
             return listProfessor;
         }catch(SQLException ex) {
            ex.printStackTrace();

@@ -1,7 +1,13 @@
+import apresentacao.FormGerarPDF;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import negocio.facade.Algoritimo;
 import negocio.facade.Individuo;
 import negocio.facade.Populacao;
 import objeto.DiaEscolar;
+import output.OutPDF;
+import output.adapter.Create;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,7 +23,7 @@ public class main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         /*
          * To change this license header, choose License Headers in Project Properties.
@@ -38,13 +44,10 @@ public class main {
             int tamPop = 100;
             //numero máximo de gerações
             int numMaxGeracoes = 10000;
-
             //define o número de genes do indivíduo baseado na solução
             int numGenes = 5;
-
             //cria a primeira população aleatérioa
             Populacao populacao = new Populacao(numGenes, tamPop);
-
             boolean temSolucao = false;
             int geracao = 0;
 
@@ -70,5 +73,20 @@ public class main {
             if (temSolucao) {
                 System.out.println("Encontrado resultado na geração " + geracao + " | " + populacao.getIndivduo(0).getGenes() + " (Aptidão: " + populacao.getIndivduo(0).getAptidao() + ")");
             }
+            Create c =  new Create();
+            c.loading(populacao.getIndivduo(0).getGenes());
+            System.out.println(c.get());
+            OutPDF out = new OutPDF(6);
+            out.setFileName("TestG");
+            out.setSchoolName("BaduSchool");
+            out.setDescricao("Não consigo ler nada");
+            out.addCell(c.get());
+           try {
+                out.CreatePDF();
+            } catch (IOException ex) {
+                Logger.getLogger(FormGerarPDF.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
         }
     }

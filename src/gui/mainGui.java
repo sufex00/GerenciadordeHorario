@@ -13,6 +13,7 @@ import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import apresentacao.FormCadastroProfessor;
+import apresentacao.FormCadastroTurma;
 import apresentacao.FormSelectHorario;
 import java.io.BufferedReader;
 import java.io.File;
@@ -82,6 +83,7 @@ public class mainGui extends javax.swing.JFrame {
         JDesktopMDI = new javax.swing.JDesktopPane();
         jButtonSelectHoras = new javax.swing.JButton();
         jButtonRefresh = new javax.swing.JButton();
+        jButtonTurma = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,6 +150,13 @@ public class mainGui extends javax.swing.JFrame {
             }
         });
 
+        jButtonTurma.setText("Criar Turma");
+        jButtonTurma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTurmaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,7 +173,8 @@ public class mainGui extends javax.swing.JFrame {
                             .addComponent(jButtonHorario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonUltimosHorarios, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                             .addComponent(jButtonSelectHoras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButtonRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonTurma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(32, 32, 32)
                         .addComponent(JDesktopMDI)))
                 .addContainerGap())
@@ -186,7 +196,9 @@ public class mainGui extends javax.swing.JFrame {
                         .addComponent(jButtonHorario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonUltimosHorarios)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonTurma)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
                         .addComponent(jButtonRefresh)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1))
@@ -204,6 +216,7 @@ public class mainGui extends javax.swing.JFrame {
         jButtonUltimosHorarios.setEnabled(true);
         jButtonNovaMateria.setEnabled(true);
         jButtonSelectHoras.setEnabled(true);
+        jButtonTurma.setEnabled(true);
 
     }
 
@@ -325,6 +338,21 @@ public class mainGui extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonRefreshActionPerformed
 
+    private void jButtonTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTurmaActionPerformed
+        // TODO add your handling code here:
+        FormCadastroTurma turma = null;
+        theButton();
+        turma =  new FormCadastroTurma();
+        turma.setVisible(true);
+        jButtonTurma.setEnabled(false);
+        JDesktopMDI.add(turma);
+        try {
+            turma.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(mainGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonTurmaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -373,6 +401,7 @@ public class mainGui extends javax.swing.JFrame {
     private javax.swing.JButton jButtonNovoProfessor;
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonSelectHoras;
+    private javax.swing.JButton jButtonTurma;
     private javax.swing.JButton jButtonUltimosHorarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

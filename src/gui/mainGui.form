@@ -36,6 +36,7 @@
                           <Component id="jButtonUltimosHorarios" alignment="0" pref="150" max="32767" attributes="0"/>
                           <Component id="jButtonSelectHoras" max="32767" attributes="0"/>
                           <Component id="jButtonRefresh" max="32767" attributes="0"/>
+                          <Component id="jButtonTurma" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="JDesktopMDI" max="32767" attributes="0"/>
@@ -62,7 +63,9 @@
                       <Component id="jButtonHorario" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButtonUltimosHorarios" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="230" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonTurma" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="191" max="32767" attributes="0"/>
                       <Component id="jButtonRefresh" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -158,6 +161,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRefreshActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonTurma">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Criar Turma"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonTurmaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

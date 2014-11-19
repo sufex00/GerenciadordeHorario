@@ -41,7 +41,7 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         this.jComboBoxMaterias.removeAllItems();
     }
     
-        private void limparCampos()
+        public void limparCampos()
     {
         
         this.jLabelCpfErro.setVisible(false);
@@ -78,6 +78,7 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         jLabelNomeErro = new javax.swing.JLabel();
         jLabelCpfErro = new javax.swing.JLabel();
         jLabelEmailErro = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableProfessores = new javax.swing.JTable();
 
@@ -180,6 +181,13 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         jLabelEmailErro.setForeground(new java.awt.Color(255, 0, 0));
         jLabelEmailErro.setText("Email inválido");
 
+        jButton1.setText("Atualizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -209,6 +217,8 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
                         .addGap(26, 26, 26)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonSalvar)))
@@ -241,21 +251,21 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9)
                     .addComponent(jTextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelEmailErro))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonLimpar, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButtonExcluir, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
 
@@ -353,23 +363,9 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
-        limparCampos();
-        String nome = jTextNome.getText();
-        String email = jTextEmail.getText();
-        String cpf = jTextCpf.getText();
-        Materia obj =(Materia) this.jComboBoxMaterias.getSelectedItem();
-        
-        Professor objProfessor = new Professor(nome, email, cpf, obj.getId());
-        NegocioProfessor objNegocioCliente = new NegocioProfessor();
-        if(objNegocioCliente.VerificadorProfessor(this, objProfessor))
-        {
-            JOptionPane.showMessageDialog(null, "Professor cadastrado com sucesso!!");
-            preencherTabela();
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Professor não cadastrado\nError!!");
-        }
+               
+        NegocioProfessor obj_NegocioProfessor = new NegocioProfessor();
+        obj_NegocioProfessor.cadastrar(this);
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimparActionPerformed
@@ -419,6 +415,18 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jComboBoxMateriasActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        NegocioProfessor negocioProfessor = new NegocioProfessor();
+        if(negocioProfessor.atualizar(this)){
+            JOptionPane.showMessageDialog(null, "Professor atualizado!!");
+            preencherTabela();
+            limpar();
+        }else{
+            JOptionPane.showMessageDialog(null, "Professor nãoo atualizado!!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void preencherTabela()
     {
         FactoryMetody FactoryBd = new FactoryBdProfessor();
@@ -453,11 +461,12 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBuscarCpf;
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonLimpar;
     private javax.swing.JButton jButtonSalvar;
-    private javax.swing.JComboBox jComboBoxMaterias;
+    public javax.swing.JComboBox jComboBoxMaterias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -472,8 +481,8 @@ public class FormCadastroProfessor extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableProfessores;
     public javax.swing.JTextField jTextCpf;
-    private javax.swing.JTextField jTextEmail;
+    public javax.swing.JTextField jTextEmail;
     private javax.swing.JTextField jTextFieldBuscaCPF;
-    private javax.swing.JTextField jTextNome;
+    public javax.swing.JTextField jTextNome;
     // End of variables declaration//GEN-END:variables
 }

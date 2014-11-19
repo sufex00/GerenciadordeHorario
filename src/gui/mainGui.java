@@ -226,6 +226,7 @@ public class mainGui extends javax.swing.JFrame {
         jButtonUltimosHorarios.setEnabled(false);
         jButtonNovaMateria.setEnabled(false);
         jButtonSelectHoras.setEnabled(false);
+        jButtonTurma.setEnabled(false);
     }
 
     private boolean isCode(String str) {

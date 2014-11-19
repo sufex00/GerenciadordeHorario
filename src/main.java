@@ -35,7 +35,7 @@ public class main {
             //elitismo
             boolean eltismo = true;
             //tamanho da população
-            int tamPop = 100;
+            int tamPop = 30;
             //numero máximo de gerações
             int numMaxGeracoes = 10000;
 

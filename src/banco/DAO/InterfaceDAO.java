@@ -17,5 +17,5 @@ public interface InterfaceDAO<T> {
     public boolean deletar(T id);
     public ArrayList<T> listar();
     public T procurar(T id);
-    public void trocar(T objeto);
+    public boolean atualizar (T objeto);
 }

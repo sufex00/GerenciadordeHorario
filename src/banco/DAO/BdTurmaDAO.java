@@ -94,7 +94,7 @@ public class BdTurmaDAO implements InterfaceDAO<Turma>{
     }
 
     @Override
-    public void trocar(Turma objeto) {
+    public boolean atualizar(Turma objeto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -63,8 +63,8 @@ public class BDCodigoDAO implements InterfaceDAO<Codigo> {
     }
 
     @Override
-    public void trocar(Codigo obj_code) {
-        
+    public boolean atualizar(Codigo obj_code) {
+        return false;
     }
 
 }

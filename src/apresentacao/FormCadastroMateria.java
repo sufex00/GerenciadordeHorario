@@ -46,6 +46,7 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
         this.jTextHorasAula.setText("");
         this.jTextId.setText("");
         this.jTextNome.setText("");
+        this.jTextId.setEditable(true);
     }
     
     /**
@@ -79,6 +80,7 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jComboTurma = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -114,6 +116,11 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
         });
 
         jButton3.setText("Excluir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButtonSalvar.setText("Salvar");
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -195,6 +202,13 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Atualizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -202,6 +216,8 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSalvar)
@@ -277,14 +293,16 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jComboTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonLimpar)
                         .addComponent(jButtonSalvar))
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3)
+                        .addComponent(jButton1)))
                 .addGap(34, 34, 34))
         );
 
@@ -307,22 +325,8 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
-        String nome = this.jTextNome.getText();
-        int horasAulas = Integer.parseInt(this.jTextHorasAula.getText());
-        int id = Integer.parseInt(this.jTextId.getText());
-        String descricao = this.jTextAreaDescricao.getText();
-        Turma obj =(Turma) this.jComboTurma.getSelectedItem();
-        Materia obj_materia = new Materia(id, nome, descricao, horasAulas, obj.getId());
-        NegocioMateria obj_negocio = new NegocioMateria();
-        if(obj_negocio.VerificadorMateria(this, obj_materia))
-        {
-            JOptionPane.showMessageDialog(null, "Materia cadastrado com sucesso!!");
-            preencherTabela();
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Materia não cadastrado\nError!!");
-        }
+        NegocioMateria obj_NegocioMateria = new NegocioMateria();
+        obj_NegocioMateria.cadastrar(this);
         
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
@@ -370,6 +374,37 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jComboTurmaActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        NegocioMateria objMateria = new NegocioMateria();
+        
+        if(objMateria.atualizar(this)){
+            JOptionPane.showMessageDialog(null, "Materia atualizada!!");
+            preencherTabela();
+            limparCampos();
+        }else{
+            JOptionPane.showMessageDialog(null, "Materia não atualizada!!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        NegocioMateria obj_NegocioMateria= new NegocioMateria();
+        
+        if(obj_NegocioMateria.excluir(this))
+        {
+            JOptionPane.showMessageDialog(null, "Materia excluida com sucesso!!");
+            preencherTabela();
+            limparCampos();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Materia não excluida!!!\nErro!!!");
+        }
+        
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
         public void preencherTabela()
     {
         FactoryMetody FactoryBd = new FactoryBdMateria();
@@ -391,7 +426,7 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
         for(Materia obj_materia : list_Materia)
         {
             Turma objTurma = (Turma) obj_BdMateria.procurar(new Turma(obj_materia.getIdTurma()));
-            System.out.println(objTurma.getDescricao());
+            System.out.println(obj_materia.getIdTurma());
                 Model.addRow(new Object[] {obj_materia.getId(), 
                     obj_materia.getNome(), obj_materia.getCargahoraria(), obj_materia.getDescricao(), objTurma.getNome()}
                     );
@@ -406,11 +441,12 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonBuscarCpf;
     private javax.swing.JButton jButtonLimpar;
     private javax.swing.JButton jButtonSalvar;
-    private javax.swing.JComboBox jComboTurma;
+    public javax.swing.JComboBox jComboTurma;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -423,8 +459,8 @@ public class FormCadastroMateria extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableMateria;
-    private javax.swing.JTextField jTextAreaDescricao;
-    private javax.swing.JTextField jTextFieldBuscaId;
+    public javax.swing.JTextField jTextAreaDescricao;
+    public javax.swing.JTextField jTextFieldBuscaId;
     public javax.swing.JTextField jTextHorasAula;
     public javax.swing.JTextField jTextId;
     public javax.swing.JTextField jTextNome;

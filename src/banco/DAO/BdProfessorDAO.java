@@ -90,7 +90,7 @@ public class BdProfessorDAO implements InterfaceDAO<Professor>{
         }
         return obj_retorno;
     }
-    public void trocar(Professor obj_professor)
+    public boolean atualizar(Professor obj_professor)
     {
         Conexao conexao = new Conexao();
         String sql="UPDATE professor set nome = ?, email=?, idmateria=? WHERE cpf=?;";
@@ -102,9 +102,12 @@ public class BdProfessorDAO implements InterfaceDAO<Professor>{
             pc.setString(4, obj_professor.getCpf());
             pc.execute();
             conexao.getConnection().close();
+            return true;
         }catch(SQLException ex) {
            ex.printStackTrace();
+           return false;
         }
+        
     }
 
 }

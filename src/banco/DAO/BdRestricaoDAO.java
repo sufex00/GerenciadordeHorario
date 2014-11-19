@@ -116,7 +116,7 @@ public class BdRestricaoDAO implements InterfaceDAO<Restricao>{
     }
 
     @Override
-    public void trocar(Restricao objeto) {
+    public boolean atualizar(Restricao objeto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -3,7 +3,13 @@ package negocio;
 
 import apresentacao.FormCadastroProfessor;
 import banco.DAO.BdProfessorDAO;
+import banco.DAO.InterfaceDAO;
+import banco.FactoryMetody.FactoryBdMateria;
+import banco.FactoryMetody.FactoryMetody;
 import banco.Memento.ListaProfessorMemento;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import objeto.Materia;
 import objeto.Professor;
 
 public class NegocioProfessor {
@@ -27,11 +33,8 @@ public class NegocioProfessor {
             retorno = false;
             objForm.jLabelCpfErro.setVisible(true);
         }
-        if(retorno)
-        {
-            retorno = objBdProfessor.salvar(objProfessor);
-        }
         return retorno;
+        
     }
     static public boolean VerificadorCPF (String strCpf )
    {
@@ -83,6 +86,10 @@ public class NegocioProfessor {
       //comparar o digito verificador do cpf com o primeiro resto + o segundo resto.
       return nDigVerific.equals(nDigResult);
    }
+    public static boolean verificadorEmail(String email)
+    {
+        return email.matches("([A-Za-z0-9\\._-]+@[A-Za-z]+\\.[A-Za-z]+)") ;
+    }
     public boolean excluir(FormCadastroProfessor form_professor)
     {
         BdProfessorDAO obj_Bdprofessor = new BdProfessorDAO();
@@ -93,4 +100,72 @@ public class NegocioProfessor {
         }
         return retorno;
     }
+    
+    public void preencherCombobox(FormCadastroProfessor form_professor){
+        FactoryMetody BdMateria = new FactoryBdMateria();
+        InterfaceDAO obj_BdMateria = BdMateria.criar_DAO_BD();
+        
+        ArrayList<Materia> lista = obj_BdMateria.listar();
+        
+        for(Materia obj_materia: lista){
+            form_professor.jComboBoxMaterias.addItem(obj_materia);
+           
+        }
+        
+}   
+    public boolean salvar(FormCadastroProfessor form_cadastro, Professor ObjProfessor){
+      boolean retorno = false;
+                
+    if(this.VerificadorProfessor(form_cadastro, ObjProfessor))
+    {
+        retorno = this.objBdProfessor.salvar(ObjProfessor);
+    }
+       return retorno;
+    }
+    public void cadastrar(FormCadastroProfessor form_professor)
+    {
+        form_professor.limparCampos();
+        String nome = form_professor.jTextNome.getText();
+
+        String email = form_professor.jTextEmail.getText();
+        String cpf = form_professor.jTextCpf.getText();
+        Materia idmateria = (Materia)form_professor.jComboBoxMaterias.getSelectedItem();
+        int id = idmateria.getId();
+       
+        
+        Professor objProfessor = new Professor(nome, email, cpf,id );
+        NegocioProfessor objNegocioCliente = new NegocioProfessor();
+        if(objNegocioCliente.VerificadorProfessor(form_professor, objProfessor))
+        {   
+            objNegocioCliente.salvar(form_professor, objProfessor);
+            JOptionPane.showMessageDialog(null, "Professor cadastrado com sucesso!!");
+            form_professor.preencherTabela();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Professor não cadastrado\nError!!");
+        }
+        
+    }
+    
+    public boolean atualizar(FormCadastroProfessor form_professor){
+        
+        BdProfessorDAO obj_BdProfessor = new BdProfessorDAO();
+        String cpf = form_professor.jTextCpf.getText();
+        String email = form_professor.jTextEmail.getText();
+        String nome = form_professor.jTextNome.getText();
+        boolean retorno = false;
+        
+        Materia objMateria = (Materia)form_professor.jComboBoxMaterias.getSelectedItem();
+        int id = objMateria.getId();
+        Professor nProfessor = new Professor(nome, email, cpf, id);
+        if(this.VerificadorProfessor(form_professor,nProfessor))
+        {
+            retorno = obj_BdProfessor.atualizar(nProfessor);
+        }
+                             
+        return retorno;
+    }
+    
+    
 }

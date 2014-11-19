@@ -36,6 +36,7 @@ public class FormCadastroTurma extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescricao = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
+        jButtonConfirm = new javax.swing.JButton();
 
         jComboBoxTurma.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -50,6 +51,8 @@ public class FormCadastroTurma extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTextAreaDescricao);
 
         jLabel4.setText("Descrição:");
+
+        jButtonConfirm.setText("Confirmar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,6 +79,10 @@ public class FormCadastroTurma extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextFieldId)))))
                 .addGap(183, 183, 183))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(354, 354, 354)
+                .addComponent(jButtonConfirm)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +101,9 @@ public class FormCadastroTurma extends javax.swing.JInternalFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(jButtonConfirm)
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         pack();
@@ -102,6 +111,7 @@ public class FormCadastroTurma extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonConfirm;
     private javax.swing.JComboBox jComboBoxTurma;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
